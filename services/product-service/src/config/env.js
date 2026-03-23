@@ -3,7 +3,6 @@ require("dotenv").config();
 function normalizeHost(raw) {
   if (!raw) return raw;
   try {
-    // if user provided a URL like http://localhost, extract hostname
     if (raw.startsWith("http://") || raw.startsWith("https://")) {
       const u = new URL(raw);
       return u.hostname;

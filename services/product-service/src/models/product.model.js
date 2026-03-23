@@ -7,6 +7,7 @@ const ProductSchema = new mongoose.Schema(
     price: { type: Number, required: true, default: 0 },
     stock: { type: Number, default: 0 },
     metadata: { type: mongoose.Schema.Types.Mixed },
+    storeId: { type: String, required: true, index: true },
   },
   { timestamps: true },
 );

@@ -1,18 +1,17 @@
 const User = require("../models/user.model");
 
 async function getUserById(id) {
-  return User.findById(id).populate("store");
+  return User.findById(id);
 }
 
 async function listUsers(filter = {}, opts = {}) {
   return User.find(filter)
     .limit(opts.limit || 100)
-    .populate("store")
     .exec();
 }
 
 async function updateUser(id, data) {
-  return User.findByIdAndUpdate(id, data, { new: true }).populate("store");
+  return User.findByIdAndUpdate(id, data, { new: true });
 }
 
 async function deleteUser(id) {

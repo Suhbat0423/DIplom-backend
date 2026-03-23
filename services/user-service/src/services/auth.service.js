@@ -3,21 +3,36 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
 
 async function register(userData) {
-  const { username, email, password } = userData;
+  const { username, email, password, role } = userData;
+
   const existingUser = await User.findOne({ $or: [{ username }, { email }] });
   if (existingUser) throw new Error("User already exists");
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({
+  const newUserData = {
     username,
     email,
     password: hashedPassword,
-  });
+  };
+
+  if (role && ["buyer", "seller", "admin"].includes(role)) {
+    newUserData.role = role;
+  }
+
+  const user = new User(newUserData);
   return user.save();
 }
 
 async function login(credentials) {
+  if (!credentials || typeof credentials !== "object") {
+    throw new Error("Credentials are required");
+  }
+
   const { email, password } = credentials;
+  if (!email || !password) {
+    throw new Error("Email and password are required");
+  }
+
   const user = await User.findOne({ email });
   if (!user) throw new Error("User not found");
 

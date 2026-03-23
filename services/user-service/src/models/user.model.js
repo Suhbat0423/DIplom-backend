@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique: true, index: true },
+    email: { type: String, required: true, unique: true, index: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ["user", "admin"], default: "user" },
-    store: { type: mongoose.Schema.Types.ObjectId, ref: "Store" },
+    role: {
+      type: String,
+      enum: ["buyer"],
+      default: "buyer",
+    },
   },
   { timestamps: true },
 );

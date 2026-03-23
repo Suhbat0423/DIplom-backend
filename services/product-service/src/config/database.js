@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { MONGODB_URI } = require("./env");
 
-// optional: avoid strictQuery warnings in newer mongoose
 mongoose.set("strictQuery", false);
 
 async function connect() {
@@ -11,7 +10,6 @@ async function connect() {
   }
 
   try {
-    // use modern defaults; set a server selection timeout so failures surface quickly
     await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 10000 });
     console.log("Connected to MongoDB");
     return mongoose.connection;
