@@ -10,6 +10,7 @@ const StoreSchema = new Schema(
     password: { type: String, required: true, select: false },
     sellerId: { type: String, index: true },
     isActive: { type: Boolean, default: true },
+    verified: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

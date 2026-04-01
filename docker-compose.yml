@@ -1,0 +1,69 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: ecom-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - ecom-network
+
+  user-service:
+    build: ./services/user-service
+    container_name: user-service
+    restart: always
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./services/user-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecom-network
+
+  product-service:
+    build: ./services/product-service
+    container_name: product-service
+    restart: always
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./services/product-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecom-network
+
+  store-service:
+    build: ./services/store-service
+    container_name: store-service
+    restart: always
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./services/store-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecom-network
+
+networks:
+  ecom-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

@@ -1,4 +1,4 @@
-const Store = require("../../models/store.model");
+const Store = require("../models/store.model");
 
 async function createStore(storeData, sellerId) {
   const newStore = {

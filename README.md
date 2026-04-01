@@ -1,43 +1,64 @@
-# DIplom-backend
+# Diplom Backend
 
-## User Service Changes
+Backend services for the e-commerce diploma project.
 
-The **user-service** now treats `Store` documents as independent accounts. Stores no longer reference a `User` owner; they have their own login credentials (`email` & `password`).
+## Current services
 
-Users are created through `/auth/register`. By default new users are given the `buyer` role, but you can request a different role by including a `role` field. For example, to create a seller:
+- `user-service`: user registration, login, and user management
+- `product-service`: product CRUD for store-owned products
+- `store-service`: store registration, login, and store management
 
-```json
-{
-  "username":"alice",
-  "email":"alice@example.com",
-  "password":"secret",
-  "role":"seller"
-}
+## Service structure
+
+Implemented services follow the same layout:
+
+```text
+src/
+  app.js
+  index.js
+  config/
+  controllers/
+  lib/
+  middleware/
+  models/
+  routes/
+  services/
+  utils/
 ```
 
-In production you should restrict role assignment to admin clients; the service only validates that the supplied role is one of `buyer|seller|admin`.
+`app.js` builds the Express application.
 
+`index.js` loads config, connects to the database, and starts the HTTP server.
 
-### Store model
+## Routes
 
-- `name`, `description`, `email`, `password`, `logo`, `address`, `isVerified`, `isActive`
-- `email` is unique and required
-- `password` is stored hashed and omitted from most query results
-- `logo` and `address` are optional profile fields; `isVerified` defaults to false
+### User service
 
-### New endpoints (mounted under `/store`)
+- `POST /auth/register`
+- `POST /auth/login`
+- `GET /users`
+- `GET /users/:id`
+- `PUT /users/:id`
+- `DELETE /users/:id`
 
-| Route             | Method | Description                     | Auth required |
-| ----------------- | ------ | ------------------------------- | ------------- |
-| `/store/register` | POST   | Create new store account        | No            |
-| `/store/login`    | POST   | Authenticate store and get JWT  | No            |
-| `/store/`         | GET    | List all stores                 | Yes           |
-| `/store/:id`      | GET    | Get store details               | Yes           |
-| `/store/:id`      | PUT    | Update store (without password) | Yes           |
-| `/store/:id`      | DELETE | Remove a store                  | Yes           |
+### Product service
 
-> **Note:** authentication middleware just verifies the JWT; the token payload contains `{ id, name, role }` where `role` is `store` for store accounts.
+- `GET /products`
+- `POST /products`
+- `GET /products/:id`
+- `PUT /products/:id`
+- `DELETE /products/:id`
 
-Existing `User` documents may still hold a `store` reference; that relationship is optional and unrelated to store authentication.
+### Store service
 
----
+- `POST /stores/auth/register`
+- `POST /stores/auth/login`
+- `GET /stores`
+- `GET /stores/:id`
+- `PUT /stores/:id`
+- `DELETE /stores/:id`
+
+## Notes
+
+- User roles currently supported by the model are `buyer`, `seller`, and `admin`.
+- The folders `cart-service`, `order-service`, `payment-service`, and `notification-service` are still placeholders and are not wired into `docker-compose.yml`.

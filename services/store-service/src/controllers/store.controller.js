@@ -1,34 +1,10 @@
-const storeService = require("../routes/services/store.service");
-
-async function create(req, res, next) {
-  try {
-    const { name, description, logo, sellerId } = req.body;
-    // sellerId is optional; if not provided, store is independent
-    const store = await storeService.createStore(
-      { name, description, logo },
-      sellerId,
-    );
-    res.status(201).json(store);
-  } catch (err) {
-    next(err);
-  }
-}
+const storeService = require("../services/store.service");
 
 async function getById(req, res, next) {
   try {
     const store = await storeService.getStoreById(req.params.id);
     if (!store) return res.status(404).json({ message: "Store not found" });
     res.json(store);
-  } catch (err) {
-    next(err);
-  }
-}
-
-async function getMySellers(req, res, next) {
-  try {
-    const sellerId = req.user.id;
-    const stores = await storeService.getStoresBySellerId(sellerId);
-    res.json(stores);
   } catch (err) {
     next(err);
   }
@@ -71,4 +47,4 @@ async function remove(req, res, next) {
   }
 }
 
-module.exports = { create, getById, getMySellers, getAll, update, remove };
+module.exports = { getById, getAll, update, remove };

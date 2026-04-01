@@ -1,18 +1,10 @@
-const express = require("express");
-const routes = require("./routes");
+const app = require("./app");
 const { HOST, PORT } = require("./config/env");
 const db = require("./config/database");
-const errorHandler = require("./middleware/error.middleware");
 const logger = require("./utils/logger");
 
-const app = express();
-
-app.use(express.json());
-app.use(routes);
-app.use(errorHandler);
-
 const host = HOST || "0.0.0.0";
-const port = PORT || 3000;
+const port = PORT || 3002;
 
 async function start() {
   try {

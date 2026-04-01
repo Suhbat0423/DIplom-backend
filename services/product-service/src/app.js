@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(morgan("combined"));
 
 app.get("/health", (req, res) => {
-  res.json({ status: "OK", service: "store-service" });
+  res.json({ status: "OK", service: "product-service" });
 });
 
 app.use(routes);
