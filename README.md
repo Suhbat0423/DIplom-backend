@@ -45,9 +45,17 @@ src/
 
 - `GET /products`
 - `POST /products`
+- `GET /products/store/:storeId`
 - `GET /products/:id`
 - `PUT /products/:id`
 - `DELETE /products/:id`
+- `GET /categories`
+- `POST /categories`
+- `GET /categories/:id`
+- `PUT /categories/:id`
+- `DELETE /categories/:id`
+
+Products support optional `imageUrl` and `categoryId` fields on create and update requests. Products can be filtered with `GET /products?storeId=...&categoryId=...`.
 
 ### Store service
 

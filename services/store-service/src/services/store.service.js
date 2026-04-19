@@ -38,8 +38,7 @@ async function updateStore(id, data, storeId) {
     }
   }
 
-  // Don't allow changing email or password via regular update
-  if (data.email) delete data.email;
+  // Password changes should go through a dedicated password flow.
   if (data.password) delete data.password;
 
   return Store.findByIdAndUpdate(id, data, { new: true });

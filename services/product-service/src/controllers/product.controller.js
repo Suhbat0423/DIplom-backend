@@ -12,7 +12,19 @@ async function create(req, res, next) {
 
 async function getAll(req, res, next) {
   try {
-    const items = await service.listProducts();
+    const filter = {};
+    if (req.query.storeId) filter.storeId = req.query.storeId;
+    if (req.query.categoryId) filter.categoryId = req.query.categoryId;
+    const items = await service.listProducts(filter);
+    res.json(items);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function getByStoreId(req, res, next) {
+  try {
+    const items = await service.listProducts({ storeId: req.params.storeId });
     res.json(items);
   } catch (err) {
     next(err);
@@ -55,4 +67,4 @@ async function remove(req, res, next) {
   }
 }
 
-module.exports = { create, getAll, getById, update, remove };
+module.exports = { create, getAll, getByStoreId, getById, update, remove };

@@ -3,17 +3,31 @@ const Joi = require("joi");
 const schemas = {
   createProduct: Joi.object({
     name: Joi.string().required().min(1).max(255),
-    description: Joi.string().optional(),
+    description: Joi.string().allow("").optional(),
+    imageUrl: Joi.string().allow("").optional(),
+    categoryId: Joi.string().optional(),
     price: Joi.number().required().min(0),
     stock: Joi.number().integer().min(0).optional(),
     metadata: Joi.any().optional(),
   }),
   updateProduct: Joi.object({
     name: Joi.string().optional().min(1).max(255),
-    description: Joi.string().optional(),
+    description: Joi.string().allow("").optional(),
+    imageUrl: Joi.string().allow("").optional(),
+    categoryId: Joi.string().optional(),
     price: Joi.number().optional().min(0),
     stock: Joi.number().integer().min(0).optional(),
     metadata: Joi.any().optional(),
+  }),
+  createCategory: Joi.object({
+    name: Joi.string().required().min(1).max(255),
+    description: Joi.string().optional(),
+    imageUrl: Joi.string().uri().optional(),
+  }),
+  updateCategory: Joi.object({
+    name: Joi.string().optional().min(1).max(255),
+    description: Joi.string().optional(),
+    imageUrl: Joi.string().uri().optional(),
   }),
 };
 

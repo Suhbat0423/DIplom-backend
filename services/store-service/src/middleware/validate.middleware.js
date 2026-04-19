@@ -4,15 +4,22 @@ const logger = require("../utils/logger");
 const schemas = {
   createStore: Joi.object({
     name: Joi.string().required().min(3).max(255),
-    description: Joi.string().optional().max(1000),
-    logo: Joi.string().optional().uri(),
+    description: Joi.string().allow("").optional().max(1000),
+    phone: Joi.string().allow("").optional().max(50),
+    address: Joi.string().allow("").optional().max(500),
+    logo: Joi.string().allow("").optional(),
+    coverImage: Joi.string().allow("").optional(),
     sellerId: Joi.string().optional(),
   }),
 
   updateStore: Joi.object({
     name: Joi.string().optional().min(3).max(255),
-    description: Joi.string().optional().max(1000),
-    logo: Joi.string().optional().uri(),
+    description: Joi.string().allow("").optional().max(1000),
+    phone: Joi.string().allow("").optional().max(50),
+    email: Joi.string().email().optional(),
+    address: Joi.string().allow("").optional().max(500),
+    logo: Joi.string().allow("").optional(),
+    coverImage: Joi.string().allow("").optional(),
     isActive: Joi.boolean().optional(),
   }),
 
@@ -20,8 +27,11 @@ const schemas = {
     name: Joi.string().required().min(3).max(255),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
-    description: Joi.string().optional().max(1000),
-    logo: Joi.string().optional().uri(),
+    description: Joi.string().allow("").optional().max(1000),
+    phone: Joi.string().allow("").optional().max(50),
+    address: Joi.string().allow("").optional().max(500),
+    logo: Joi.string().allow("").optional(),
+    coverImage: Joi.string().allow("").optional(),
     sellerId: Joi.string().optional(),
   }),
 
