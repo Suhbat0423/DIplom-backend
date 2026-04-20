@@ -44,6 +44,20 @@ async function updateStore(id, data, storeId) {
   return Store.findByIdAndUpdate(id, data, { new: true });
 }
 
+async function requestVerification(id, storeId) {
+  const store = await Store.findById(id);
+  if (!store) throw new Error("Store not found");
+  if (storeId && store._id.toString() !== storeId) {
+    throw new Error("Unauthorized: cannot update another store");
+  }
+
+  store.verificationStatus = "pending";
+  store.verificationFeedback = "";
+  store.verified = false;
+
+  return store.save();
+}
+
 async function deleteStore(id, storeId) {
   // If storeId provided, verify ownership (for protected routes)
   if (storeId) {
@@ -63,5 +77,6 @@ module.exports = {
   getStoresBySellerId,
   listAllStores,
   updateStore,
+  requestVerification,
   deleteStore,
 };

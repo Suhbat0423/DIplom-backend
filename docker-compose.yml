@@ -61,6 +61,36 @@ services:
     networks:
       - ecom-network
 
+  cart-service:
+    build: ./services/cart-service
+    container_name: cart-service
+    restart: always
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./services/cart-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ecom-network
+
+  order-service:
+    build: ./services/order-service
+    container_name: order-service
+    restart: always
+    ports:
+      - "3005:3005"
+    env_file:
+      - ./services/order-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      cart-service:
+        condition: service_started
+    networks:
+      - ecom-network
+
 networks:
   ecom-network:
     driver: bridge

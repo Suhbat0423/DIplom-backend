@@ -1,5 +1,34 @@
 const Joi = require("joi");
 
+const productSizes = ["XS", "S", "SM", "M", "MD", "L", "LG", "XL", "XXL"];
+const productSizeSchema = Joi.string()
+  .trim()
+  .custom((value, helpers) => {
+    const normalized = value.toUpperCase();
+    if (!productSizes.includes(normalized)) {
+      return helpers.error("any.only");
+    }
+    return normalized;
+  })
+  .messages({
+    "any.only": `size must be one of ${productSizes.join(", ")}`,
+  });
+
+const sizeStockSchema = Joi.object()
+  .pattern(
+    Joi.string()
+      .trim()
+      .custom((value, helpers) => {
+        const normalized = value.toUpperCase();
+        if (!productSizes.includes(normalized)) {
+          return helpers.error("any.only");
+        }
+        return normalized;
+      }),
+    Joi.number().integer().min(0),
+  )
+  .optional();
+
 const schemas = {
   createProduct: Joi.object({
     name: Joi.string().required().min(1).max(255),
@@ -8,6 +37,8 @@ const schemas = {
     categoryId: Joi.string().optional(),
     price: Joi.number().required().min(0),
     stock: Joi.number().integer().min(0).optional(),
+    sizes: Joi.array().items(productSizeSchema).unique().optional(),
+    sizeStock: sizeStockSchema,
     metadata: Joi.any().optional(),
   }),
   updateProduct: Joi.object({
@@ -17,6 +48,8 @@ const schemas = {
     categoryId: Joi.string().optional(),
     price: Joi.number().optional().min(0),
     stock: Joi.number().integer().min(0).optional(),
+    sizes: Joi.array().items(productSizeSchema).unique().optional(),
+    sizeStock: sizeStockSchema,
     metadata: Joi.any().optional(),
   }),
   createCategory: Joi.object({

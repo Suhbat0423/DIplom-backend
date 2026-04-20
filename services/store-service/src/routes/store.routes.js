@@ -13,6 +13,11 @@ router.put(
   validate(schemas.updateStore),
   controller.update,
 );
+router.post(
+  "/:id/verification",
+  authMiddleware,
+  controller.requestVerification,
+);
 router.delete("/:id", authMiddleware, controller.remove);
 
 module.exports = router;

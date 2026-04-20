@@ -37,6 +37,16 @@ async function update(req, res, next) {
   }
 }
 
+async function requestVerification(req, res, next) {
+  try {
+    const storeId = req.user.id;
+    const store = await storeService.requestVerification(req.params.id, storeId);
+    res.json(store);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function remove(req, res, next) {
   try {
     const storeId = req.user.id;
@@ -47,4 +57,4 @@ async function remove(req, res, next) {
   }
 }
 
-module.exports = { getById, getAll, update, remove };
+module.exports = { getById, getAll, update, requestVerification, remove };

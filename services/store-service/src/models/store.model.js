@@ -14,6 +14,12 @@ const StoreSchema = new Schema(
     sellerId: { type: String, index: true },
     isActive: { type: Boolean, default: true },
     verified: { type: Boolean, default: false },
+    verificationStatus: {
+      type: String,
+      enum: ["incomplete", "pending", "verified", "rejected"],
+      default: "incomplete",
+    },
+    verificationFeedback: { type: String, default: "" },
   },
   { timestamps: true },
 );

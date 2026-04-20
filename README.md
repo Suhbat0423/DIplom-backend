@@ -7,6 +7,8 @@ Backend services for the e-commerce diploma project.
 - `user-service`: user registration, login, and user management
 - `product-service`: product CRUD for store-owned products
 - `store-service`: store registration, login, and store management
+- `cart-service`: authenticated buyer shopping cart management
+- `order-service`: checkout and order management
 
 ## Service structure
 
@@ -55,7 +57,10 @@ src/
 - `PUT /categories/:id`
 - `DELETE /categories/:id`
 
-Products support optional `imageUrl` and `categoryId` fields on create and update requests. Products can be filtered with `GET /products?storeId=...&categoryId=...`.
+Products support optional `imageUrl`, `categoryId`, and `sizes` fields on create
+and update requests. Supported sizes are `XS`, `S`, `SM`, `M`, `MD`, `L`, `LG`,
+`XL`, and `XXL`.
+Products can be filtered with `GET /products?storeId=...&categoryId=...`.
 
 ### Store service
 
@@ -66,7 +71,36 @@ Products support optional `imageUrl` and `categoryId` fields on create and updat
 - `PUT /stores/:id`
 - `DELETE /stores/:id`
 
+### Cart service
+
+All cart routes require a bearer token from `user-service`.
+
+- `GET /cart`
+- `POST /cart/items`
+- `PUT /cart/items/:itemId`
+- `DELETE /cart/items/:itemId`
+- `DELETE /cart`
+
+Cart items accept `productId` and `quantity`, with optional selected `size` and
+product snapshot fields: `name`, `imageUrl`, `price`, and `storeId`. Supported
+cart item sizes are `XS`, `S`, `SM`, `M`, `MD`, `L`, `LG`, `XL`, and `XXL`.
+
+### Order service
+
+All order routes require a bearer token. `POST /orders` can create an order from
+the current cart when no `items` array is provided, or from explicit `items`.
+
+- `POST /orders`
+- `GET /orders`
+- `GET /orders/my`
+- `GET /orders/store/:storeId`
+- `GET /orders/:id`
+- `PUT /orders/:id/status`
+
+Order item snapshots include `productId`, `storeId`, `name`, `imageUrl`, `price`,
+`quantity`, `size`, and `subtotal`.
+
 ## Notes
 
 - User roles currently supported by the model are `buyer`, `seller`, and `admin`.
-- The folders `cart-service`, `order-service`, `payment-service`, and `notification-service` are still placeholders and are not wired into `docker-compose.yml`.
+- The folders `payment-service` and `notification-service` are still placeholders and are not wired into `docker-compose.yml`.
