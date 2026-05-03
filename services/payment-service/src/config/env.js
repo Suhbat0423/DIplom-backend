@@ -20,9 +20,8 @@ module.exports = {
     process.env.MONGODB_URI ||
     process.env.MONGO_URI ||
     process.env.DB_URL ||
-    "mongodb://localhost:27017/order-service",
-  CART_SERVICE_URL: process.env.CART_SERVICE_URL || "http://localhost:3004",
-  CLEAR_CART_AFTER_ORDER: process.env.CLEAR_CART_AFTER_ORDER !== "false",
+    "mongodb://localhost:27017/payment-service",
+  ORDER_SERVICE_URL: process.env.ORDER_SERVICE_URL || "http://localhost:3005",
   INTERNAL_API_KEY:
     process.env.INTERNAL_API_KEY ||
     process.env.ORDER_INTERNAL_API_KEY ||

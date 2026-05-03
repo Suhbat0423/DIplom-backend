@@ -6,15 +6,32 @@ const logger = require("./utils/logger");
 const host = HOST || "0.0.0.0";
 const port = PORT || 3003;
 
+let server;
+
+async function shutdown(signal) {
+  logger.info(`Received ${signal}; shutting down store service`);
+
+  if (server) {
+    await new Promise((resolve, reject) => {
+      server.close((err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        resolve();
+      });
+    });
+  }
+
+  await db.disconnect();
+}
+
 async function start() {
   try {
-    try {
-      await db.connect();
-    } catch (err) {
-      logger.warn("Database not connected; continuing without DB");
-    }
+    await db.connect();
 
-    app.listen(port, host, () => {
+    server = app.listen(port, host, () => {
       logger.info(`Store service running at http://${host}:${port}`);
     });
   } catch (err) {
@@ -24,5 +41,17 @@ async function start() {
 }
 
 start();
+
+["SIGINT", "SIGTERM"].forEach((signal) => {
+  process.on(signal, async () => {
+    try {
+      await shutdown(signal);
+      process.exit(0);
+    } catch (err) {
+      logger.error("Failed to shut down store service cleanly", err);
+      process.exit(1);
+    }
+  });
+});
 
 module.exports = app;

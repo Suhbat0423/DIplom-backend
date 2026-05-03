@@ -62,6 +62,11 @@ const schemas = {
       .valid(...paymentStatuses)
       .optional(),
   }),
+  updatePaymentStatus: Joi.object({
+    paymentStatus: Joi.string()
+      .valid(...paymentStatuses)
+      .required(),
+  }),
 };
 
 function validate(schema) {

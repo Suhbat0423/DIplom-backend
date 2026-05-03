@@ -4,12 +4,12 @@ const db = require("./config/database");
 const logger = require("./utils/logger");
 
 const host = HOST || "0.0.0.0";
-const port = PORT || 3005;
+const port = PORT || 3006;
 
 let server;
 
 async function shutdown(signal) {
-  logger.info(`Received ${signal}; shutting down order service`);
+  logger.info(`Received ${signal}; shutting down payment service`);
 
   if (server) {
     await new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ async function start() {
     await db.connect();
 
     server = app.listen(port, host, () => {
-      logger.info(`Order service running at http://${host}:${port}`);
+      logger.info(`Payment service running at http://${host}:${port}`);
     });
   } catch (err) {
     logger.error("Failed to start application", err);
@@ -50,7 +50,7 @@ start();
       await shutdown(signal);
       process.exit(0);
     } catch (err) {
-      logger.error("Failed to shut down order service cleanly", err);
+      logger.error("Failed to shut down payment service cleanly", err);
       process.exit(1);
     }
   });

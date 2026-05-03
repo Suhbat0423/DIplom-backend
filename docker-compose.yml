@@ -1,4 +1,28 @@
 services:
+  api-gateway:
+    build: ./services/api-gateway
+    container_name: api-gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./services/api-gateway/.env
+    depends_on:
+      user-service:
+        condition: service_started
+      product-service:
+        condition: service_started
+      store-service:
+        condition: service_started
+      cart-service:
+        condition: service_started
+      order-service:
+        condition: service_started
+      payment-service:
+        condition: service_started
+    networks:
+      - ecom-network
+
   mongodb:
     image: mongo:latest
     container_name: ecom-mongodb
@@ -87,6 +111,22 @@ services:
       mongodb:
         condition: service_healthy
       cart-service:
+        condition: service_started
+    networks:
+      - ecom-network
+
+  payment-service:
+    build: ./services/payment-service
+    container_name: payment-service
+    restart: always
+    ports:
+      - "3006:3006"
+    env_file:
+      - ./services/payment-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      order-service:
         condition: service_started
     networks:
       - ecom-network

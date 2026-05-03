@@ -175,10 +175,28 @@ async function updateOrderStatus(id, data, user) {
   return order.save();
 }
 
+async function updateOrderPaymentStatus(id, data) {
+  const order = await Order.findById(id).exec();
+  if (!order) return null;
+
+  order.paymentStatus = data.paymentStatus;
+
+  if (data.paymentStatus === "paid" && order.status === "pending") {
+    order.status = "paid";
+  }
+
+  if (data.paymentStatus === "refunded") {
+    order.status = "refunded";
+  }
+
+  return order.save();
+}
+
 module.exports = {
   createOrder,
   listOrders,
   listStoreOrders,
   getOrderById,
   updateOrderStatus,
+  updateOrderPaymentStatus,
 };

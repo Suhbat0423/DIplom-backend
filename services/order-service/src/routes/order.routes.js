@@ -2,7 +2,15 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/order.controller");
 const auth = require("../middleware/auth.middleware");
+const internalAuth = require("../middleware/internal.middleware");
 const { validate, schemas } = require("../middleware/validate.middleware");
+
+router.put(
+  "/:id/payment-status",
+  internalAuth,
+  validate(schemas.updatePaymentStatus),
+  controller.updatePaymentStatus,
+);
 
 router.use(auth);
 

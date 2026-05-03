@@ -64,6 +64,16 @@ async function updateStatus(req, res, next) {
   }
 }
 
+async function updatePaymentStatus(req, res, next) {
+  try {
+    const order = await service.updateOrderPaymentStatus(req.params.id, req.body);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   create,
   getAll,
@@ -71,4 +81,5 @@ module.exports = {
   getByStore,
   getById,
   updateStatus,
+  updatePaymentStatus,
 };
