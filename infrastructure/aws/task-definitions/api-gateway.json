@@ -1,0 +1,40 @@
+{
+  "family": "api-gateway",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "__ECS_EXECUTION_ROLE_ARN__",
+  "taskRoleArn": "__ECS_TASK_ROLE_ARN__",
+  "containerDefinitions": [
+    {
+      "name": "api-gateway",
+      "image": "__AWS_ACCOUNT_ID__.dkr.ecr.__AWS_REGION__.amazonaws.com/ecom/api-gateway:__IMAGE_TAG__",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "PORT", "value": "8080" },
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "USER_SERVICE_URL", "value": "__USER_SERVICE_URL__" },
+        { "name": "PRODUCT_SERVICE_URL", "value": "__PRODUCT_SERVICE_URL__" },
+        { "name": "STORE_SERVICE_URL", "value": "__STORE_SERVICE_URL__" },
+        { "name": "CART_SERVICE_URL", "value": "__CART_SERVICE_URL__" },
+        { "name": "ORDER_SERVICE_URL", "value": "__ORDER_SERVICE_URL__" },
+        { "name": "PAYMENT_SERVICE_URL", "value": "__PAYMENT_SERVICE_URL__" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ecom/api-gateway",
+          "awslogs-region": "__AWS_REGION__",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

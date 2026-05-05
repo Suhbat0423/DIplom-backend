@@ -1,0 +1,36 @@
+{
+  "family": "product-service",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "__ECS_EXECUTION_ROLE_ARN__",
+  "taskRoleArn": "__ECS_TASK_ROLE_ARN__",
+  "containerDefinitions": [
+    {
+      "name": "product-service",
+      "image": "__AWS_ACCOUNT_ID__.dkr.ecr.__AWS_REGION__.amazonaws.com/ecom/product-service:__IMAGE_TAG__",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3002,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "HOST", "value": "0.0.0.0" },
+        { "name": "PORT", "value": "3002" },
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ecom/product-service",
+          "awslogs-region": "__AWS_REGION__",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

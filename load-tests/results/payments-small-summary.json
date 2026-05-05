@@ -1,0 +1,184 @@
+{
+  "metrics": {
+    "data_sent": {
+      "count": 137716,
+      "rate": 8768.314065021113
+    },
+    "vus": {
+      "value": 5,
+      "min": 5,
+      "max": 5
+    },
+    "http_reqs": {
+      "count": 226,
+      "rate": 14.389315538461558
+    },
+    "http_req_tls_handshaking": {
+      "max": 0,
+      "p(90)": 0,
+      "p(95)": 0,
+      "avg": 0,
+      "min": 0,
+      "med": 0
+    },
+    "http_req_sending": {
+      "max": 0.338,
+      "p(90)": 0.049,
+      "p(95)": 0.06274999999999999,
+      "avg": 0.02692477876106194,
+      "min": 0.005,
+      "med": 0.019
+    },
+    "http_req_failed": {
+      "passes": 0,
+      "fails": 226,
+      "thresholds": {
+        "rate<0.05": false
+      },
+      "value": 0
+    },
+    "vus_max": {
+      "value": 5,
+      "min": 5,
+      "max": 5
+    },
+    "http_req_duration{expected_response:true}": {
+      "avg": 13.800765486725664,
+      "min": 6.44,
+      "med": 12.911,
+      "max": 71.938,
+      "p(90)": 18.937,
+      "p(95)": 21.668
+    },
+    "iterations": {
+      "count": 75,
+      "rate": 4.775215333560252
+    },
+    "http_req_duration": {
+      "avg": 13.800765486725664,
+      "min": 6.44,
+      "med": 12.911,
+      "max": 71.938,
+      "p(90)": 18.937,
+      "p(95)": 21.668,
+      "thresholds": {
+        "p(95)<2000": false
+      }
+    },
+    "http_req_blocked": {
+      "avg": 0.17671238938053094,
+      "min": 0.072,
+      "med": 0.156,
+      "max": 0.923,
+      "p(90)": 0.28350000000000003,
+      "p(95)": 0.3647499999999998
+    },
+    "data_received": {
+      "rate": 21092.826493251217,
+      "count": 331286
+    },
+    "http_req_waiting": {
+      "p(90)": 18.824,
+      "p(95)": 21.591499999999996,
+      "avg": 13.709827433628323,
+      "min": 6.37,
+      "med": 12.827,
+      "max": 71.486
+    },
+    "http_req_receiving": {
+      "min": 0.011,
+      "med": 0.0535,
+      "max": 0.375,
+      "p(90)": 0.114,
+      "p(95)": 0.16175,
+      "avg": 0.06401327433628314
+    },
+    "checks": {
+      "passes": 377,
+      "fails": 0,
+      "value": 1
+    },
+    "iteration_duration": {
+      "avg": 1041.9332911066667,
+      "min": 1033.083292,
+      "med": 1041.093667,
+      "max": 1056.197042,
+      "p(90)": 1047.6873162,
+      "p(95)": 1050.7510544
+    },
+    "http_req_connecting": {
+      "avg": 0.14270796460176985,
+      "min": 0.063,
+      "med": 0.1205,
+      "max": 0.771,
+      "p(90)": 0.2255,
+      "p(95)": 0.28474999999999995
+    }
+  },
+  "root_group": {
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": {
+      "setup": {
+        "groups": {},
+        "checks": {
+          "login status is 200": {
+            "name": "login status is 200",
+            "path": "::setup::login status is 200",
+            "id": "bb27b460b057923f4a083e3603c038b9",
+            "passes": 1,
+            "fails": 0
+          },
+          "login returned token": {
+            "id": "9c891d721d521c8b89b1661b5e0b7ad7",
+            "passes": 1,
+            "fails": 0,
+            "name": "login returned token",
+            "path": "::setup::login returned token"
+          }
+        },
+        "name": "setup",
+        "path": "::setup",
+        "id": "5c0f8025f7e0b6654089e5b00e950f1a"
+      }
+    },
+    "checks": {
+      "order pre-step status is 201": {
+        "id": "cd862a7db834821936c565cc2a11ce01",
+        "passes": 75,
+        "fails": 0,
+        "name": "order pre-step status is 201",
+        "path": "::order pre-step status is 201"
+      },
+      "payment create status is 201 or 200": {
+        "name": "payment create status is 201 or 200",
+        "path": "::payment create status is 201 or 200",
+        "id": "c8a4443c5797541486a1b99b4efa4698",
+        "passes": 75,
+        "fails": 0
+      },
+      "payment create returned id": {
+        "name": "payment create returned id",
+        "path": "::payment create returned id",
+        "id": "b87b63e0790cef023717577445ab5b52",
+        "passes": 75,
+        "fails": 0
+      },
+      "payment confirm status is 200": {
+        "name": "payment confirm status is 200",
+        "path": "::payment confirm status is 200",
+        "id": "1200161fb94f0a8ecdcf48bafed10ca1",
+        "passes": 75,
+        "fails": 0
+      },
+      "payment confirm status is paid": {
+        "name": "payment confirm status is paid",
+        "path": "::payment confirm status is paid",
+        "id": "5a0c83965b47fe8ae8e7636fa5944714",
+        "passes": 75,
+        "fails": 0
+      }
+    },
+    "name": "",
+    "path": ""
+  }
+}

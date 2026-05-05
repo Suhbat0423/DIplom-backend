@@ -1,0 +1,39 @@
+{
+  "family": "payment-service",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "__ECS_EXECUTION_ROLE_ARN__",
+  "taskRoleArn": "__ECS_TASK_ROLE_ARN__",
+  "containerDefinitions": [
+    {
+      "name": "payment-service",
+      "image": "__AWS_ACCOUNT_ID__.dkr.ecr.__AWS_REGION__.amazonaws.com/ecom/payment-service:__IMAGE_TAG__",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3006,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "HOST", "value": "0.0.0.0" },
+        { "name": "PORT", "value": "3006" },
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" },
+        { "name": "ORDER_SERVICE_URL", "value": "__ORDER_SERVICE_URL__" },
+        { "name": "INTERNAL_API_KEY", "value": "__INTERNAL_API_KEY__" },
+        { "name": "JWT_SECRET", "value": "__JWT_SECRET__" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ecom/payment-service",
+          "awslogs-region": "__AWS_REGION__",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

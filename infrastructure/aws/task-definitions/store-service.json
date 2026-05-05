@@ -1,0 +1,37 @@
+{
+  "family": "store-service",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "__ECS_EXECUTION_ROLE_ARN__",
+  "taskRoleArn": "__ECS_TASK_ROLE_ARN__",
+  "containerDefinitions": [
+    {
+      "name": "store-service",
+      "image": "__AWS_ACCOUNT_ID__.dkr.ecr.__AWS_REGION__.amazonaws.com/ecom/store-service:__IMAGE_TAG__",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3003,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "HOST", "value": "0.0.0.0" },
+        { "name": "PORT", "value": "3003" },
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" },
+        { "name": "JWT_SECRET", "value": "__JWT_SECRET__" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ecom/store-service",
+          "awslogs-region": "__AWS_REGION__",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
