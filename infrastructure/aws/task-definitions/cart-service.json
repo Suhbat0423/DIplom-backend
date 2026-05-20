@@ -13,21 +13,23 @@
       "essential": true,
       "portMappings": [
         {
+          "name": "cart-service-3004-tcp",
           "containerPort": 3004,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "environment": [
         { "name": "HOST", "value": "0.0.0.0" },
         { "name": "PORT", "value": "3004" },
         { "name": "NODE_ENV", "value": "production" },
-        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" },
+        { "name": "MONGODB_URI", "value": "__CART_MONGODB_URI__" },
         { "name": "JWT_SECRET", "value": "__JWT_SECRET__" }
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecom/cart-service",
+          "awslogs-group": "/ecs/cart-service",
           "awslogs-region": "__AWS_REGION__",
           "awslogs-stream-prefix": "ecs"
         }

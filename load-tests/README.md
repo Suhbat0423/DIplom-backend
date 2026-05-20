@@ -6,6 +6,9 @@ These `k6` scripts test the heaviest write flows in this backend:
 - `payments.k6.js`: order creation + payment creation + payment confirmation
 - `orders-stress.k6.js`: no-sleep staged stress test for order creation
 - `payments-stress.k6.js`: no-sleep staged stress test for the full payment flow
+- `cart-stress.k6.js`: write-heavy staged stress test for cart add/update/clear
+- `gateway-stress.k6.js`: staged mixed-route stress test through the API gateway
+- `db-saturation-stress.k6.js`: write-heavy mixed stress test intended to push MongoDB harder
 
 ## Requirements
 
@@ -51,6 +54,9 @@ k6 run load-tests/payments.k6.js
 ```bash
 k6 run load-tests/orders-stress.k6.js
 k6 run load-tests/payments-stress.k6.js
+k6 run load-tests/cart-stress.k6.js
+k6 run load-tests/gateway-stress.k6.js
+k6 run load-tests/db-saturation-stress.k6.js
 ```
 
 You can also override stage targets:
@@ -65,6 +71,7 @@ k6 run load-tests/orders-stress.k6.js
 - k6 output: `http_req_duration`, `http_req_failed`, iteration rate
 - app containers: `docker stats`
 - MongoDB: CPU, memory, connections, slow queries
+- For `db-saturation-stress.k6.js`, MongoDB metrics matter more than raw gateway latency.
 
 Recommended progression:
 

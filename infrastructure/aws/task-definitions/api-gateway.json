@@ -13,8 +13,10 @@
       "essential": true,
       "portMappings": [
         {
+          "name": "api-gateway-8080-tcp",
           "containerPort": 8080,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "environment": [
@@ -30,7 +32,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecom/api-gateway",
+          "awslogs-group": "/ecs/api-gateway",
           "awslogs-region": "__AWS_REGION__",
           "awslogs-stream-prefix": "ecs"
         }

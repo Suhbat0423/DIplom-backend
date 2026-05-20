@@ -102,8 +102,15 @@ set +a
   - `http://payment-service:3006`
 - All services already expose `/health`, so those routes can be used by ECS or
   load balancer health checks.
-- A shared `MONGODB_URI` is assumed because the current codebase uses a shared
-  MongoDB deployment with logical collection separation.
+- Each backend service can use its own MongoDB connection string through:
+  - `USER_MONGODB_URI`
+  - `PRODUCT_MONGODB_URI`
+  - `STORE_MONGODB_URI`
+  - `CART_MONGODB_URI`
+  - `ORDER_MONGODB_URI`
+  - `PAYMENT_MONGODB_URI`
+- This allows either separate databases inside one cluster or fully separate
+  MongoDB clusters per service.
 
 ## Autoscaling defaults
 

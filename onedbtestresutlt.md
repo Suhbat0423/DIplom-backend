@@ -112,10 +112,26 @@ VUS=10 DURATION=30s k6 run load-tests/payments.k6.js
 STAGE_1_TARGET=20 STAGE_2_TARGET=50 STAGE_3_TARGET=100 STAGE_4_TARGET=150 \
  k6 run load-tests/orders-stress.k6.js
 
-22000 дээр алдаа гарлаа
+38000 дээр алдаа гарлаа
 
 WARN[0046] Request Failed error="Post \"http://localhost:8080/api/orders\": dial tcp 127.0.0.1:8080: connect: can't assign requested address"
 WARN[0046] Request Failed error="Post \"http://localhost:8080/api/orders\": dial tcp 127.0.0.1:8080: connect: can't assign requested address"
 WARN[0046] Request Failed error="Post \"http://localhost:8080/api/orders\": dial tcp 127.0.0.1:8080: connect: can't assign requested address"
 WARN[0046] Request Failed error="Post \"http://localhost:8080/api/orders\": dial tcp 127.0.0.1:8080: connect: can't assign requested address"
 WARN[0046] Request Failed error="Post \"http://localhost:8080/api/orders\": dial tcp 127.0.0.1:8080: connect: can't assign requested address"
+
+тэст
+
+dial tcp 127.0.0.1:8080: connect: can't assign requested address
+
+Энэ нь их магадлалаар:
+
+- backend logic унасан алдаа биш
+- MongoDB query алдаа биш
+- k6 ажиллаж байгаа локал машин дээрх socket/address exhaustion
+
+Тэгэхээр диплом дээр ингэж бичвэл зөв:
+
+- “Өндөр ачааллын үед stress test-ийн явцад client-side connection exhaustion ажиглагдсан.”
+- “Local single-node орчинд request rate өсөхөд load generator өөрөө network resource limit-д хүрсэн.”
+- “Иймээс энэ тест нь зөвхөн application биш, туршилтын орчны хязгаарлалтыг мөн харуулсан.”

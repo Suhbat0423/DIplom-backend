@@ -13,20 +13,22 @@
       "essential": true,
       "portMappings": [
         {
+          "name": "product-service-3002-tcp",
           "containerPort": 3002,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "environment": [
         { "name": "HOST", "value": "0.0.0.0" },
         { "name": "PORT", "value": "3002" },
         { "name": "NODE_ENV", "value": "production" },
-        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" }
+        { "name": "MONGODB_URI", "value": "__PRODUCT_MONGODB_URI__" }
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecom/product-service",
+          "awslogs-group": "/ecs/product-service",
           "awslogs-region": "__AWS_REGION__",
           "awslogs-stream-prefix": "ecs"
         }

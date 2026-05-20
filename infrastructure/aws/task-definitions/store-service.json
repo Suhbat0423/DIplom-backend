@@ -13,21 +13,23 @@
       "essential": true,
       "portMappings": [
         {
+          "name": "store-service-3003-tcp",
           "containerPort": 3003,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "environment": [
         { "name": "HOST", "value": "0.0.0.0" },
         { "name": "PORT", "value": "3003" },
         { "name": "NODE_ENV", "value": "production" },
-        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" },
+        { "name": "MONGODB_URI", "value": "__STORE_MONGODB_URI__" },
         { "name": "JWT_SECRET", "value": "__JWT_SECRET__" }
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecom/store-service",
+          "awslogs-group": "/ecs/store-service",
           "awslogs-region": "__AWS_REGION__",
           "awslogs-stream-prefix": "ecs"
         }

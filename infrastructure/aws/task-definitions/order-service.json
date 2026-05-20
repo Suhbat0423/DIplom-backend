@@ -13,15 +13,17 @@
       "essential": true,
       "portMappings": [
         {
+          "name": "order-service-3005-tcp",
           "containerPort": 3005,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "environment": [
         { "name": "HOST", "value": "0.0.0.0" },
         { "name": "PORT", "value": "3005" },
         { "name": "NODE_ENV", "value": "production" },
-        { "name": "MONGODB_URI", "value": "__MONGODB_URI__" },
+        { "name": "MONGODB_URI", "value": "__ORDER_MONGODB_URI__" },
         { "name": "CART_SERVICE_URL", "value": "__CART_SERVICE_URL__" },
         { "name": "INTERNAL_API_KEY", "value": "__INTERNAL_API_KEY__" },
         { "name": "JWT_SECRET", "value": "__JWT_SECRET__" },
@@ -30,7 +32,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecom/order-service",
+          "awslogs-group": "/ecs/order-service",
           "awslogs-region": "__AWS_REGION__",
           "awslogs-stream-prefix": "ecs"
         }

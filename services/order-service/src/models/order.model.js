@@ -68,11 +68,15 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+function buildOrderNumber(doc) {
+  const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const objectIdPart = String(doc._id).slice(-8).toUpperCase();
+  return `ORD-${stamp}-${objectIdPart}`;
+}
+
 OrderSchema.pre("validate", function setOrderNumber() {
   if (!this.orderNumber) {
-    const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-    const suffix = Math.random().toString(36).slice(2, 8).toUpperCase();
-    this.orderNumber = `ORD-${stamp}-${suffix}`;
+    this.orderNumber = buildOrderNumber(this);
   }
 });
 

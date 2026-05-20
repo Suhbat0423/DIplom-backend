@@ -9,7 +9,7 @@ Frontend should use the API gateway at `http://localhost:8080/api/...`.
 - `user-service`: user registration, login, and user management
 - `product-service`: product CRUD for store-owned products
 - `store-service`: store registration, login, and store management
-- `cart-service`: authenticated buyer shopping cart management
+- `cart-service`: authenticated user shopping cart management
 - `order-service`: checkout and order management
 - `payment-service`: payment creation and status management for orders
 - `api-gateway`: unified entry point and reverse proxy for all backend services
@@ -133,7 +133,11 @@ Use these gateway prefixes instead of calling each service directly:
 
 ## Notes
 
-- User roles currently supported by the model are `buyer`, `seller`, and `admin`.
+- Backend user roles are `user` and `admin`.
+- If the frontend shows normalized labels such as `user` or `shop`, those are
+  presentation aliases or UI labels, not separate backend role values.
+- For long-term consistency, frontend and backend role naming should be unified
+  to the same canonical values.
 
 ## Kubernetes autoscaling
 

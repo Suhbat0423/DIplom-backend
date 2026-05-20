@@ -4,6 +4,7 @@ const PRODUCT_SIZES = ["XS", "S", "SM", "M", "MD", "L", "LG", "XL", "XXL"];
 
 const CartItemSchema = new mongoose.Schema(
   {
+    itemKey: { type: String, index: true },
     productId: { type: String, required: true },
     storeId: { type: String },
     name: { type: String },

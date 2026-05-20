@@ -15,7 +15,7 @@ async function register(userData) {
     password: hashedPassword,
   };
 
-  if (role && ["buyer", "seller", "admin"].includes(role)) {
+  if (role && ["user", "admin"].includes(role)) {
     newUserData.role = role;
   }
 

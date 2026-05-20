@@ -15,6 +15,7 @@ fi
 : "${AWS_REGION:?AWS_REGION is required}"
 : "${AWS_ACCOUNT_ID:?AWS_ACCOUNT_ID is required}"
 : "${IMAGE_TAG:=latest}"
+: "${IMAGE_PLATFORM:=linux/amd64}"
 
 SERVICES=(
   "api-gateway"
@@ -44,11 +45,12 @@ for service in "${SERVICES[@]}"; do
       --image-scanning-configuration scanOnPush=true \
       --region "${AWS_REGION}" >/dev/null
 
-  echo "Building image: ${image_uri}"
-  docker build -t "${image_uri}" "${service_dir}"
-
-  echo "Pushing image: ${image_uri}"
-  docker push "${image_uri}"
+  echo "Building and pushing image for platform ${IMAGE_PLATFORM}: ${image_uri}"
+  docker buildx build \
+    --platform "${IMAGE_PLATFORM}" \
+    --tag "${image_uri}" \
+    --push \
+    "${service_dir}"
 done
 
 echo "All images built and pushed."
